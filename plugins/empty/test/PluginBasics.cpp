@@ -15,7 +15,7 @@ TEST_CASE ("Plugin instance", "[instance]")
     SECTION ("name")
     {
         CHECK_THAT (testPlugin.getName().toStdString(),
-            Catch::Matchers::Equals ("Pamplejuce Demo"));
+            Catch::Matchers::Equals ("Empty"));
     }
 
     SECTION ("program name")
@@ -24,18 +24,3 @@ TEST_CASE ("Plugin instance", "[instance]")
         CHECK (testPlugin.getProgramName (0).isNotEmpty());
     }
 }
-
-
-#ifdef PAMPLEJUCE_IPP
-    #include <ipp.h>
-
-TEST_CASE ("IPP version", "[ipp]")
-{
-    #if defined(__APPLE__)
-        // macOS uses 2021.9.1 from pip wheel (only x86_64 version available)
-        CHECK_THAT (ippsGetLibVersion()->Version, Catch::Matchers::Equals ("2021.9.1 (r0x7e208212)"));
-    #else
-        CHECK_THAT (ippsGetLibVersion()->Version, Catch::Matchers::Equals ("2026.0.0 (r0xa7ad6ebc)"));
-    #endif
-}
-#endif
