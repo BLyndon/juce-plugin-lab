@@ -53,3 +53,22 @@ Reference sources:
 | Bitcrusher          | Airwindows                            | Reduced bit depth vs. reduced sample rate; audible aliasing                                     |
 | Compressor          | AUDynamicsProcessor                   | Attack/release on a drum loop, knee, gain reduction                                             |
 | Reverb              | AUMatrixReverb, Dragonfly Reverb      | Decay, pre-delay, density: when it sounds metallic (comb) vs. smooth                            |
+
+### Apple AUs per plugin
+
+Only the Apple AUs available in AudioPluginHost on this machine (AU scan). "—" means no Apple AU covers the concept.
+
+| Plugin              | Apple AU                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------- |
+| Gain / Pan          | —                                                                                           |
+| Tremolo / Auto-Pan  | —                                                                                           |
+| Biquad (LP/HP/peak) | AULowpass, AUHipass, AUBandpass, AULowShelfFilter, AUHighShelfFilter, AUParametricEQ        |
+| Phaser              | —                                                                                           |
+| Delay               | AUDelay, AUSampleDelay                                                                      |
+| Ping-Pong Delay     | —                                                                                           |
+| Chorus / Flanger    | —                                                                                           |
+| Auto-Wah            | —                                                                                           |
+| Distortion          | AUDistortion                                                                                |
+| Bitcrusher          | —                                                                                           |
+| Compressor          | AUDynamicsProcessor, AUPeakLimiter                                                          |
+| Reverb              | AUMatrixReverb, AUReverb2                                                                   |
