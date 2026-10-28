@@ -30,7 +30,7 @@ Learning project: basic audio effect plugins. VST3 only, C++ with JUCE, macOS (d
       docs/
       CMakeLists.txt
 
-- Build, validate, and test must work per plugin (`--target <name>`) as well as for all plugins at once.
+- Build, validate, and test must work per plugin (`--target <name>_VST3 <name>_Tests`, then `ctest --test-dir Builds/plugins/<name>`) as well as for all plugins at once.
 
 ## Realtime rules (audio thread)
 
