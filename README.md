@@ -1,57 +1,90 @@
-![PAMPLEJUCE](assets/images/pamplejuce.png)
-[![](https://github.com/sudara/pamplejuce/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/sudara/pamplejuce/actions)
+# juce-plugin-lab
 
-Pamplejuce is a ~~template~~ lifestyle for creating and building JUCE plugins in 2026.
+[![Build and Test](https://github.com/BLyndon/juce-plugin-lab/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/BLyndon/juce-plugin-lab/actions/workflows/build_and_test.yml)
 
-Out-of-the-box, it:
+Learning project: basic audio effect plugins, one concept per plugin. VST3 only, C++23 with JUCE, built with CMake. Developed on macOS; CI builds and tests on macOS, Windows, and Linux.
 
-1. Runs C++23
-2. Uses JUCE 9.x as a git submodule (tracking develop).
-3. Uses CPM for dependency management.
-3. Relies on CMake 3.25 and higher for cross-platform building.
-4. Has [Catch2](https://github.com/catchorg/Catch2) v3.8.1 for the test framework and runner.
-5. Includes a `Tests` target and a `Benchmarks` target with examples to get started quickly.
-6. Has [Melatonin Inspector](https://github.com/sudara/melatonin_inspector) installed as a JUCE module to help relieve headaches when building plugin UI.
+Derived from the [Pamplejuce](https://github.com/sudara/pamplejuce) template and restructured into a multi-plugin monorepo.
 
-It also has integration with GitHub Actions, specifically:
+## Layout
 
-1. Building and testing cross-platform (linux, macOS, Windows) binaries
-2. Running tests and benchmarks in CI
-3. Running [pluginval](http://github.com/tracktion/pluginval) 1.x against the binaries for plugin validation
-4. Config for [installing Intel IPP](https://www.intel.com/content/www/us/en/developer/tools/oneapi/ipp.html)
-5. [Code signing and notarization on macOS](https://melatonin.dev/blog/how-to-code-sign-and-notarize-macos-audio-plugins-in-ci/)
-6. [Windows code signing via Azure Trusted Signing](https://melatonin.dev/blog/code-signing-on-windows-with-azure-trusted-signing/)
+```
+plugins/<name>/
+├── spec.md          what the plugin does and the values the tests check
+├── src/             processor and editor
+└── test/            Catch2 tests (impulse, sweep) and pluginval
+common/              shared code, extracted once a second plugin needs it
+docs/                guides and references
+JUCE/                JUCE submodule (develop)
+cmake/               Pamplejuce CMake includes (submodule)
+CMakeLists.txt       one root, one add_subdirectory line per plugin
+```
 
-It also contains:
+Plugins do not depend on each other.
 
-1. A `.gitignore` for all platforms.
-2. A `.clang-format` file for keeping code tidy.
-3. A `VERSION` file that will propagate through JUCE and your app.
-4. A ton of useful comments and options around the CMake config.
+## Plugins
 
-## How does this all work at a high level?
+| Plugin  | Concept                  |
+| ------- | ------------------------ |
+| `empty` | Toolchain, build chain   |
 
-Check out the [official Pamplejuce documentation](https://melatonin.dev/manuals/pamplejuce/how-does-this-all-work/).
+The planned sequence is in [plugin-concept-examples.md](docs/context/plugin-concept-examples.md).
 
-[![Arc - 2024-10-01 51@2x](https://github.com/user-attachments/assets/01d19d2d-fbac-481f-8cec-e9325b2abe57)](https://melatonin.dev/manuals/pamplejuce/how-does-this-all-work/)
+## Setup
 
-## Setting up for YOUR project
+Requirements: CMake 3.25+, Ninja, a C++23 compiler (on macOS, the Xcode Command Line Tools are enough).
 
-This is a template repo!
+```bash
+git clone --recurse-submodules https://github.com/BLyndon/juce-plugin-lab.git
+```
 
-That means you can click "[Use this template](https://github.com/sudara/pamplejuce/generate)" here or at the top of the page to get your own copy (not fork) of the repo. Then you can make it private or keep it public, up to you.
+In an existing clone:
 
-Then check out the [documentation](https://melatonin.dev/manuals/pamplejuce/setting-your-project-up/) so you know what to tweak.
+```bash
+git submodule update --init --recursive
+```
 
-**Using an AI coding agent?** The included `CLAUDE.md` / `AGENTS.md` has a first-time setup wizard — just ask your agent to set up the project and it will walk you through naming, CI configuration, and code signing.
+## Build and test
 
-> [!NOTE]
-> Tests will immediately run and fail (go red) until you [set up code signing](https://melatonin.dev/manuals/pamplejuce/getting-started/code-signing/).
+```bash
+# configure (once; again when CMakeLists.txt changes)
+cmake -B Builds -G Ninja -DCMAKE_BUILD_TYPE=Debug
 
-## Having Issues?
+# build one plugin / everything
+cmake --build Builds --target <name>_VST3 <name>_Tests
+cmake --build Builds
 
-Thanks to everyone who has contributed to the repository. 
+# Catch2 tests and pluginval for one plugin / everything
+ctest --test-dir Builds/plugins/<name> --output-on-failure
+ctest --test-dir Builds --output-on-failure
+```
 
-This repository covers a _lot_ of ground. JUCE itself has a lot of surface area. It's a group effort to maintain the garden and keep things nice!
+pluginval runs as a CTest test (`<name>_pluginval`) and is downloaded into the build folder. Each build copies the VST3 bundle into the user plugin folder.
 
-If something isn't just working out of the box — *it's probably not just you* — others are running into the problem, too, I promise. Check out [the official docs](https://melatonin.dev/manuals/pamplejuce), then please do [open an issue](https://github.com/sudara/pamplejuce/issues/new)!
+## Adding a plugin
+
+1. Create `plugins/<name>/` with `spec.md`, `src/`, `test/`, and a `CMakeLists.txt` modeled on an existing plugin (own `PLUGIN_CODE`, `BUNDLE_ID`, `PRODUCT_NAME`).
+2. Add `add_subdirectory(plugins/<name>)` to the root `CMakeLists.txt`.
+
+## Docs
+
+| Document | Content |
+| --- | --- |
+| [plugin-filesystem.md](docs/plugin-filesystem.md) | Where plugins live on macOS and Linux, bundle layout, inspect commands |
+| [audiopluginhost.md](docs/audiopluginhost.md) | Build, start, and load plugins into JUCE's AudioPluginHost |
+| [toolstack-reference.md](docs/context/toolstack-reference.md) | Toolchain decisions, build chain, standard commands, failure map |
+| [workflow-reference.md](docs/context/workflow-reference.md) | Session routine, spec template, review checklist |
+| [plugin-concept-examples.md](docs/context/plugin-concept-examples.md) | Plugin sequence, concepts, reference plugins |
+| [pirkle-theory-reference.md](docs/context/pirkle-theory-reference.md) | DSP theory map for Pirkle, "Designing Audio Effect Plugins in C++" |
+
+`CLAUDE.md` holds the rules for the coding agent (scope, realtime rules, verification).
+
+## CI
+
+GitHub Actions ([build_and_test.yml](.github/workflows/build_and_test.yml)) builds, tests, and validates every plugin on macOS, Windows, and Linux. Changes that cannot affect the build skip CI, and so do commits with `[ci skip]` in the message.
+
+## License
+
+[AGPLv3](LICENSE), because the plugins link [JUCE](https://juce.com), which is licensed under AGPLv3 or the commercial JUCE licence.
+
+Parts derived from the Pamplejuce template remain under the MIT license, see [LICENSE-PAMPLEJUCE](LICENSE-PAMPLEJUCE). Submodules keep their own licenses.
