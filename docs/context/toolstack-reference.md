@@ -50,23 +50,24 @@ Each arrow is a place where an error can enter. Knowing which step failed is the
 
 ## 3. Standard commands
 
-Typical forms; the template's documentation and CI workflow are authoritative. Confirm exact flags in Session 0a and record them here.
+Confirmed locally in Session 0a (macOS, Command Line Tools only). Generator and build directory match the CI workflow.
 
 ```bash
-# configure (once, or when CMakeLists.txt changes)
-cmake -B build
+# configure (once; re-run only when CMakeLists.txt changes)
+cmake -B Builds -G Ninja -DCMAKE_BUILD_TYPE=Debug
 
-# build one plugin / everything
-cmake --build build --target <name>
-cmake --build build
+# build one plugin (VST3 bundle + test executable) / everything
+cmake --build Builds --target <name>_VST3 <name>_Tests
+cmake --build Builds
 
-# tests (Catch2 via CTest)
-ctest --test-dir build
-
-# validate (pluginval installed as app or CLI; match the level used in the template's CI workflow)
-pluginval --strictness-level 5 path/to/Plugin.vst3
+# tests and pluginval for one plugin / everything
+ctest --test-dir Builds/plugins/<name> --output-on-failure
+ctest --test-dir Builds --output-on-failure
 ```
 
+- `--target <name>` alone builds only the plugin's static library, not the VST3 bundle or the tests. JUCE names the bundle target `<name>_VST3`.
+- pluginval is not run separately: each plugin registers it as a CTest test (`<name>_pluginval`, strictness level 10). It is downloaded into the build folder; nothing is installed system-wide.
+- `Builds/` is git-ignored. A rebuild without source changes finishes in about a second; CTest always reruns every test, and pluginval takes most of that time (about 16 s per plugin).
 - VST3 bundles are installed per user under `~/Library/Audio/Plug-Ins/VST3`. JUCE can copy the bundle there after each build (CMake option on the plugin target).
 - AudioPluginHost is part of the JUCE repository (extras). It is built once, then reused for all plugins and for reference plugins.
 - Use a Debug build while developing, Release for performance checks.
@@ -102,17 +103,18 @@ pluginval --strictness-level 5 path/to/Plugin.vst3
 4. CI as in the template (three platforms), hosted on GitHub. A platform job that causes problems is dropped immediately.
 5. Generator, build directory, and prerequisites follow the template (C++23, CMake minimum).
 6. Session 0 is split: 0a (repo and CI), 0b (empty plugin through the chain).
+7. Monorepo layout `plugins/<name>/` with one CMake root is in place (first plugin: `plugins/empty`); extras and signing steps listed in §1 are removed; CI is green. A second plugin has not been added yet.
+8. Command Line Tools alone are sufficient on this machine: a clean configure, build (C++23, no warnings), Catch2 tests, and pluginval pass without Xcode. CMake and Ninja are installed via Homebrew.
+9. Exact local commands: see §3.
+10. Repository is public, so CI runs free of charge.
+11. JUCE is used under AGPLv3 (learning project, not sold; source is public). A closed-source or commercial release would need the commercial JUCE licence; check its terms then.
+12. The template's `CLAUDE.md` / `AGENTS.md` are removed. Its relevant rules are covered by this project's `CLAUDE.md`.
+13. Local signature: locally built bundles are ad-hoc signed by the build and load in AudioPluginHost without any signing setup (checked with `Empty.vst3`: scanned, loaded, editor opens).
 
-**Open, Session 0a (in this order)**
+**Open, Session 0a**
 
-1. First step: adapt the template to the monorepo layout (`plugins/<name>/`) and check that its CMake setup can host several plugins. Then remove the extras and signing steps listed in §1 and get CI green.
-2. Whether Command Line Tools alone are sufficient on this machine (including C++23 support in Apple Clang), or full Xcode is needed after all. How CMake is installed.
-3. Exact local commands (§3).
-4. Repository visibility versus CI cost: public repositories run CI for free. For private repositories GitHub bills macOS minutes at 10x and Windows at 2x against the free allowance (per the template's notes; check the current plan limits).
-5. JUCE licensing terms for the intended use (check the current license).
-6. Last: the template ships its own `CLAUDE.md` / `AGENTS.md` with a first-time setup wizard. The human reads both it and this project's `CLAUDE.md` personally and decides how to combine them.
+None; Session 0a is complete.
 
 **Open, Session 0b**
 
-7. Local signature: confirm that locally built bundles load in AudioPluginHost without any signing setup on this machine.
-8. One-time host setup: build AudioPluginHost, set the VST3 and AU scan paths, install the reference plugins and a free spectrum analyzer listed in `plugin-concept-examples.md`, and keep a fixed set of test audio (drum loop, guitar DI, noise, sweep) so reference and own builds are compared on the same sources.
+8. One-time host setup: AudioPluginHost is built and the VST3 scan path is set (see `docs/audiopluginhost.md`). Still open: scan for AU plug-ins (Apple's built-in effects, used as listening references; AUs have no scan path, macOS registers them centrally), install the reference plugins and a free spectrum analyzer listed in `plugin-concept-examples.md`, and keep a fixed set of test audio (drum loop, guitar DI, noise, sweep) so reference and own builds are compared on the same sources. AudioPluginHost cannot play audio files, so the test audio needs a way into the host (for example a loopback audio device or a DAW as second host).
