@@ -28,7 +28,7 @@ Stable reference. Describes the toolchain, the build chain, and where things typ
 
 ## 2. The build chain
 
-```
+```text
 Spec ──► Source (C++/JUCE) ──► CMake configure ──► Build ──► VST3 bundle
   ▲                                                           │
   └── expected values ◄── Measurement (Catch2) ◄── Host / test run / CI

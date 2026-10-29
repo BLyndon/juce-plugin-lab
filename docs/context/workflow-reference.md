@@ -1,11 +1,5 @@
 # Workflow Reference: One Plugin (Module)
 
-Stable reference for working through one plugin: session routine, spec template, verification, and review checklist. Journey-level material (goal, roles, learning levels) lives in the project instructions and is not repeated here. Theory content lives in `pirkle-theory-reference.md`; the toolchain lives in `toolstack-reference.md`; the plugin sequence lives in `plugin-concept-examples.md`.
-
-**"Understood" means:** the human can explain and evaluate the result without reading the code, and can predict how it will measure and sound before running it.
-
----
-
 ## 1. Session routine (about 4 h, once per weekend)
 
 | Phase             | Time                                                 | Content                                                                                                                                                                                                                                                                                              |

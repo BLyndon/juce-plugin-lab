@@ -37,7 +37,7 @@ Hosts scan these folders. There is no registry and no install step.
 
 With `COPY_PLUGIN_AFTER_BUILD TRUE`, JUCE copies after every build:
 
-```
+```text
 <build dir>/…/<Name>_artefacts/<Config>/VST3/<Name>.vst3
         │
         ▼
@@ -51,7 +51,7 @@ The last build wins. Debug and Release overwrite each other.
 
 ### macOS
 
-```
+```text
 <Name>.vst3/Contents/
 ├── Info.plist                 bundle ID, version, name
 ├── MacOS/<Name>               binary
@@ -61,7 +61,7 @@ The last build wins. Debug and Release overwrite each other.
 
 ### Linux
 
-```
+```text
 <Name>.vst3/Contents/
 ├── x86_64-linux/<Name>.so     binary (aarch64-linux/ on ARM)
 └── Resources/moduleinfo.json  VST3 metadata

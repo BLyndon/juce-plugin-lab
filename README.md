@@ -8,7 +8,7 @@ Derived from the [Pamplejuce](https://github.com/sudara/pamplejuce) template and
 
 ## Layout
 
-```
+```text
 plugins/<name>/
 ├── spec.md          what the plugin does and the values the tests check
 ├── src/             processor and editor
@@ -24,9 +24,9 @@ Plugins do not depend on each other.
 
 ## Plugins
 
-| Plugin  | Concept                  |
-| ------- | ------------------------ |
-| `empty` | Toolchain, build chain   |
+| Plugin  | Concept                |
+| ------- | ---------------------- |
+| `empty` | Toolchain, build chain |
 
 The planned sequence is in [plugin-concept-examples.md](docs/context/plugin-concept-examples.md).
 
@@ -68,14 +68,14 @@ pluginval runs as a CTest test (`<name>_pluginval`) and is downloaded into the b
 
 ## Docs
 
-| Document | Content |
-| --- | --- |
-| [plugin-filesystem.md](docs/plugin-filesystem.md) | Where plugins live on macOS and Linux, bundle layout, inspect commands |
-| [audiopluginhost.md](docs/audiopluginhost.md) | Build, start, and load plugins into JUCE's AudioPluginHost |
-| [toolstack-reference.md](docs/context/toolstack-reference.md) | Toolchain decisions, build chain, standard commands, failure map |
-| [workflow-reference.md](docs/context/workflow-reference.md) | Session routine, spec template, review checklist |
-| [plugin-concept-examples.md](docs/context/plugin-concept-examples.md) | Plugin sequence, concepts, reference plugins |
-| [pirkle-theory-reference.md](docs/context/pirkle-theory-reference.md) | DSP theory map for Pirkle, "Designing Audio Effect Plugins in C++" |
+| Document                                                              | Content                                                                |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [plugin-filesystem.md](docs/plugin-filesystem.md)                     | Where plugins live on macOS and Linux, bundle layout, inspect commands |
+| [audiopluginhost.md](docs/audiopluginhost.md)                         | Build, start, and load plugins into JUCE's AudioPluginHost             |
+| [toolstack-reference.md](docs/context/toolstack-reference.md)         | Toolchain decisions, build chain, standard commands, failure map       |
+| [workflow-reference.md](docs/context/workflow-reference.md)           | Session routine, spec template, review checklist                       |
+| [plugin-concept-examples.md](docs/context/plugin-concept-examples.md) | Plugin sequence, concepts, reference plugins                           |
+| [pirkle-theory-reference.md](docs/context/pirkle-theory-reference.md) | DSP theory map for Pirkle, "Designing Audio Effect Plugins in C++"     |
 
 `CLAUDE.md` holds the rules for the coding agent (scope, realtime rules, verification).
 

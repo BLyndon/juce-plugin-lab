@@ -1,6 +1,6 @@
 # CMake and Ninja: what they do
 
-Two tools build this repository. CMake decides *what* to build. Ninja *runs* the build. All commands run from the repository root.
+Two tools build this repository. CMake decides _what_ to build. Ninja _runs_ the build. All commands run from the repository root.
 
 ## CMake: the configurator
 
@@ -33,7 +33,7 @@ Ninja is one of several backends CMake can generate for (others: Make, Xcode, Vi
 
 ## How they fit together
 
-```
+```text
 CMakeLists.txt ──(cmake configure)──► Builds/build.ninja ──(ninja)──► .vst3 bundle + test binaries
 ```
 
@@ -49,15 +49,15 @@ Configure again only after changing a `CMakeLists.txt` or adding a plugin. CMake
 
 Maven bundles several jobs into one tool. In C++ they are split across tools.
 
-| Job                             | Maven (Java)                                 | This repository (C++)                                                    |
-| ------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| Describe the project            | `pom.xml`                                    | `CMakeLists.txt`                                                         |
-| Fetch dependencies              | Built in (Maven Central → `~/.m2`)           | Not built in: JUCE is a git submodule, Catch2 comes via CPM (a CMake script) |
-| Plan the build                  | Built in                                     | CMake (configure step)                                                   |
-| Run compiler and linker         | Built in (calls `javac` through plugins)     | Ninja (runs `clang++` and the linker)                                    |
-| Run tests                       | `mvn test` (Surefire)                        | CTest + Catch2                                                           |
-| Lifecycle                       | Fixed phases: `compile → test → package → install` | No fixed phases, only targets built by name                        |
-| Multi-module                    | Parent POM + `<modules>`                     | Root `CMakeLists.txt` + `add_subdirectory` per plugin                    |
+| Job                     | Maven (Java)                                       | This repository (C++)                                                        |
+| ----------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Describe the project    | `pom.xml`                                          | `CMakeLists.txt`                                                             |
+| Fetch dependencies      | Built in (Maven Central → `~/.m2`)                 | Not built in: JUCE is a git submodule, Catch2 comes via CPM (a CMake script) |
+| Plan the build          | Built in                                           | CMake (configure step)                                                       |
+| Run compiler and linker | Built in (calls `javac` through plugins)           | Ninja (runs `clang++` and the linker)                                        |
+| Run tests               | `mvn test` (Surefire)                              | CTest + Catch2                                                               |
+| Lifecycle               | Fixed phases: `compile → test → package → install` | No fixed phases, only targets built by name                                  |
+| Multi-module            | Parent POM + `<modules>`                           | Root `CMakeLists.txt` + `add_subdirectory` per plugin                        |
 
 What is different underneath:
 

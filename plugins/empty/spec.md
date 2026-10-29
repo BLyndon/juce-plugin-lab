@@ -10,7 +10,7 @@ None. Phase 0 does not apply to Session 0b.
 
 ## Signal flow
 
-```
+```text
 input (mono or stereo) → output (same layout), unchanged
 ```
 
