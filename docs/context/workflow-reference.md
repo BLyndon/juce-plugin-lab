@@ -35,7 +35,7 @@ Which finished plugin was explored in Phase 0, and what was observed (surprises,
 
 ## Signal flow
 
-Block diagram in text: input → stages → output, including wet/dry and feedback paths.
+Block diagram as a Mermaid flowchart (`flowchart LR`): input → stages → output, including wet/dry and feedback paths.
 
 ## Parameters
 
