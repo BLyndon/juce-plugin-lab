@@ -71,6 +71,7 @@ Copy `plugins/template/`, change its metadata, and add one `add_subdirectory` li
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | [plugin-filesystem.md](docs/plugin-filesystem.md)                     | Where plugins live on macOS and Linux, bundle layout, inspect commands |
 | [audiopluginhost.md](docs/audiopluginhost.md)                         | Build, start, and load plugins into JUCE's AudioPluginHost             |
+| [decibels-and-gain.md](docs/decibels-and-gain.md)                     | Decibel scale, parameter scaling, smoothing (gain as example)          |
 | [toolstack-reference.md](docs/context/toolstack-reference.md)         | Toolchain decisions, build chain, standard commands, failure map       |
 | [workflow-reference.md](docs/context/workflow-reference.md)           | Session routine, spec template, review checklist                       |
 | [plugin-concept-examples.md](docs/context/plugin-concept-examples.md) | Plugin sequence, concepts, reference plugins                           |
