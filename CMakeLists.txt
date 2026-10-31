@@ -72,3 +72,4 @@ set(PLUGIN_MANUFACTURER_CODE Jplb)
 
 # One line per plugin
 add_subdirectory(plugins/template)
+add_subdirectory(plugins/gain)
