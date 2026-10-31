@@ -5,8 +5,22 @@
 PluginProcessor::PluginProcessor()
     : AudioProcessor (BusesProperties()
               .withInput ("Input", juce::AudioChannelSet::stereo(), true)
-              .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
+              .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
+      parameters (*this, nullptr, "Parameters", createParameterLayout())
 {
+    gainDb = parameters.getRawParameterValue ("gain");
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout PluginProcessor::createParameterLayout()
+{
+    return {
+        std::make_unique<juce::AudioParameterFloat> (
+            juce::ParameterID { "gain", 1 },
+            "Gain",
+            juce::NormalisableRange<float> (-60.0f, 12.0f),
+            0.0f,
+            juce::AudioParameterFloatAttributes().withLabel ("dB"))
+    };
 }
 
 PluginProcessor::~PluginProcessor()
@@ -68,14 +82,37 @@ void PluginProcessor::changeProgramName (int index, const juce::String& newName)
 }
 
 //==============================================================================
+float PluginProcessor::getTargetGain() const
+{
+    // g = 10^(L/20)
+    return std::pow (10.0f, gainDb->load() / 20.0f);
+}
+
+void PluginProcessor::snapToTargetGain()
+{
+    targetGain = getTargetGain();
+    currentGain = targetGain;
+    gainStep = 0.0f;
+    rampSamplesRemaining = 0;
+}
+
 void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Allocate and initialise DSP state here, never in processBlock
-    juce::ignoreUnused (sampleRate, samplesPerBlock);
+    juce::ignoreUnused (samplesPerBlock);
+
+    // Ramp time 20 ms
+    rampLengthSamples = juce::jmax (1, juce::roundToInt (0.02 * sampleRate));
+    snapRequested = false;
+    snapToTargetGain();
 }
 
 void PluginProcessor::releaseResources()
 {
+}
+
+void PluginProcessor::reset()
+{
+    snapToTargetGain();
 }
 
 bool PluginProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -101,11 +138,34 @@ void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // Passthrough: the samples are left unchanged. Per-channel DSP goes here.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    if (snapRequested.exchange (false))
     {
-        auto* channelData = buffer.getWritePointer (channel);
-        juce::ignoreUnused (channelData);
+        snapToTargetGain();
+    }
+    else
+    {
+        // On every change, start a new linear ramp from the current g to the new target
+        const auto newTarget = getTargetGain();
+        if (!juce::exactlyEqual (newTarget, targetGain))
+        {
+            targetGain = newTarget;
+            rampSamplesRemaining = rampLengthSamples;
+            gainStep = (targetGain - currentGain) / static_cast<float> (rampLengthSamples);
+        }
+    }
+
+    // y[n] = g[n] * x[n], the same g[n] for every channel
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+    {
+        if (rampSamplesRemaining > 0)
+        {
+            --rampSamplesRemaining;
+            // The last ramp step lands exactly on the target
+            currentGain = rampSamplesRemaining == 0 ? targetGain : currentGain + gainStep;
+        }
+
+        for (int channel = 0; channel < totalNumInputChannels; ++channel)
+            buffer.getWritePointer (channel)[sample] *= currentGain;
     }
 }
 
@@ -123,14 +183,20 @@ juce::AudioProcessorEditor* PluginProcessor::createEditor()
 //==============================================================================
 void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // Store the plugin's parameters here
-    juce::ignoreUnused (destData);
+    auto state = parameters.copyState();
+    std::unique_ptr<juce::XmlElement> xml (state.createXml());
+    copyXmlToBinary (*xml, destData);
 }
 
 void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // Restore the parameters stored by getStateInformation
-    juce::ignoreUnused (data, sizeInBytes);
+    std::unique_ptr<juce::XmlElement> xml (getXmlFromBinary (data, sizeInBytes));
+    if (xml != nullptr && xml->hasTagName (parameters.state.getType()))
+    {
+        parameters.replaceState (juce::ValueTree::fromXml (*xml));
+        // A loaded state takes effect without a ramp
+        snapRequested = true;
+    }
 }
 
 //==============================================================================

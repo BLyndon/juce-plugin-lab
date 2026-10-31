@@ -10,6 +10,7 @@ public:
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
+    void reset() override;
 
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
 
@@ -34,6 +35,27 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::AudioProcessorValueTreeState parameters;
+
 private:
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
+    // Target g from the current Gain parameter value
+    float getTargetGain() const;
+    // Jumps g[n] to the target without a ramp
+    void snapToTargetGain();
+
+    std::atomic<float>* gainDb = nullptr;
+
+    // One linear smoother for g, shared by all channels
+    float currentGain = 1.0f;
+    float targetGain = 1.0f;
+    float gainStep = 0.0f;
+    int rampSamplesRemaining = 0;
+    int rampLengthSamples = 0;
+
+    // Set by setStateInformation, consumed by the audio thread
+    std::atomic<bool> snapRequested { false };
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
 };

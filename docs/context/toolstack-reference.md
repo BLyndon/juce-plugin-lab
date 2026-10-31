@@ -103,7 +103,7 @@ ctest --test-dir Builds --output-on-failure
 4. CI as in the template (three platforms), hosted on GitHub. A platform job that causes problems is dropped immediately.
 5. Generator, build directory, and prerequisites follow the template (C++23, CMake minimum).
 6. Session 0 is split: 0a (repo and CI), 0b (empty plugin through the chain).
-7. Monorepo layout `plugins/<name>/` with one CMake root is in place (first plugin: `plugins/empty`, since renamed to `plugins/template`, the copy source for new plugins); extras and signing steps listed in §1 are removed; CI is green. A second plugin has not been added yet.
+7. Monorepo layout `plugins/<name>/` with one CMake root is in place (first plugin: `plugins/empty`, since renamed to `plugins/template`, the copy source for new plugins); extras and signing steps listed in §1 are removed; CI is green. The second plugin is `plugins/gain`.
 8. Command Line Tools alone are sufficient on this machine: a clean configure, build (C++23, no warnings), Catch2 tests, and pluginval pass without Xcode. CMake and Ninja are installed via Homebrew.
 9. Exact local commands: see §3.
 10. Repository is public, so CI runs free of charge.
