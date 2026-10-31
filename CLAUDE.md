@@ -6,7 +6,8 @@ Learning project: basic audio effect plugins. VST3 only, C++ with JUCE, macOS (d
 
 - The human designs and reviews. You implement from the spec.
 - Implement exactly what the spec says. Do not add features, options, or abstractions beyond it. If the spec is unclear or seems wrong, ask instead of guessing.
-- Do not edit `plugins/<name>/spec.md` or anything in `docs/` unless asked. Both belong to the human.
+- Do not edit `plugins/<name>/spec.md` unless asked. It belongs to the human.
+- `docs/` is maintained by you: keep it consistent with the code, the repository structure, and the workflow whenever they change.
 
 ## Language
 
