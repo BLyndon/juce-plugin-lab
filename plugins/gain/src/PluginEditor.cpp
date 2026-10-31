@@ -3,9 +3,9 @@
 PluginEditor::PluginEditor (PluginProcessor& p)
     : AudioProcessorEditor (&p),
       processorRef (p),
-      gainAttachment (processorRef.parameters, "gain", gainSlider)
+      gainAttachment (processorRef.parameters, Parameters::Gain::id, gainSlider)
 {
-    gainSlider.setTextValueSuffix (" dB");
+    gainSlider.setTextValueSuffix (juce::String (" ") + Parameters::Gain::unit);
     addAndMakeVisible (gainSlider);
 
     // Make sure that before the constructor has finished, you've set the

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Parameters.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 
 class PluginProcessor : public juce::AudioProcessor

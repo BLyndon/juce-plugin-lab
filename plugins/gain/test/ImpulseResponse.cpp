@@ -8,12 +8,13 @@ constexpr int blockSize = 512;
 
 static void setGainDb (PluginProcessor& plugin, float gainDb)
 {
-    auto* param = plugin.parameters.getParameter ("gain");
+    auto* param = plugin.parameters.getParameter (Parameters::Gain::id);
     REQUIRE (param != nullptr);
     param->setValueNotifyingHost (param->convertTo0to1 (gainDb));
 }
 
-// Expected values from spec.md: y[n] = g · x[n] with g = 10^(L/20), so an impulse comes out
+// Expected values from spec.md, written out here instead of taken from Parameters.h so that
+// a wrong constant in the code fails the tests: y[n] = g · x[n] with g = 10^(L/20), so an impulse comes out
 // as g at sample 0 and 0 elsewhere, on every channel (relative tolerance 1e-6)
 static void checkImpulse (PluginProcessor& plugin, int numChannels, float gainDb)
 {

@@ -8,18 +8,18 @@ PluginProcessor::PluginProcessor()
               .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
       parameters (*this, nullptr, "Parameters", createParameterLayout())
 {
-    gainDb = parameters.getRawParameterValue ("gain");
+    gainDb = parameters.getRawParameterValue (Parameters::Gain::id);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout PluginProcessor::createParameterLayout()
 {
     return {
         std::make_unique<juce::AudioParameterFloat> (
-            juce::ParameterID { "gain", 1 },
-            "Gain",
-            juce::NormalisableRange<float> (-60.0f, 12.0f),
-            0.0f,
-            juce::AudioParameterFloatAttributes().withLabel ("dB"))
+            juce::ParameterID { Parameters::Gain::id, Parameters::Gain::version },
+            Parameters::Gain::name,
+            juce::NormalisableRange<float> (Parameters::Gain::minDb, Parameters::Gain::maxDb),
+            Parameters::Gain::defaultDb,
+            juce::AudioParameterFloatAttributes().withLabel (Parameters::Gain::unit))
     };
 }
 
@@ -100,8 +100,7 @@ void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::ignoreUnused (samplesPerBlock);
 
-    // Ramp time 20 ms
-    rampLengthSamples = juce::jmax (1, juce::roundToInt (0.02 * sampleRate));
+    rampLengthSamples = juce::jmax (1, juce::roundToInt (Parameters::Gain::rampTimeSeconds * sampleRate));
     snapRequested = false;
     snapToTargetGain();
 }
