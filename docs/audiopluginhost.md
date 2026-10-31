@@ -25,7 +25,7 @@ On first start, macOS may ask for microphone access (needed for the Audio Input 
 1. **Options → Edit the List of Available Plug-ins...**
 2. In that window: **Options... → Scan for new or updated VST3 plug-ins**.
 3. Check that the scan paths include `~/Library/Audio/Plug-Ins/VST3`, then start the scan.
-4. Own plugins appear with the product name from their `CMakeLists.txt` (for example **Empty**). Failed plugins are listed at the end of the scan.
+4. Own plugins appear with the product name from their `CMakeLists.txt` (for example **Template**). Failed plugins are listed at the end of the scan.
 5. For Apple's built-in effects (AUDelay, AUParametricEQ, ...; listening references only): **Options... → Scan for new or updated AudioUnit plug-ins**. AUs have no scan path; macOS registers them centrally.
 
 Our plugins are copied to `~/Library/Audio/Plug-Ins/VST3` after each build, so a rebuilt plugin needs no new scan; a new plugin does.

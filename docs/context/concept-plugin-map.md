@@ -5,7 +5,7 @@ Pirkle sections refer to `pirkle-theory-reference.md`.
 
 | #   | Plugin              | Concept                                 | Pirkle               | Reference (Phase 0)                 | Listen for                                    |
 | --- | ------------------- | --------------------------------------- | -------------------- | ----------------------------------- | --------------------------------------------- |
-| 0   | Empty plugin        | Toolchain, build chain                  | Ch. 2, 3             | —                                   | —                                             |
+| 0   | Template            | Toolchain, build chain, copy source     | Ch. 2, 3             | —                                   | —                                             |
 | 1   | Gain / Pan          | Parameters, smoothing, lifecycle        | Ch. 2                | Any free utility plugin             | Pan law: center vs. hard left/right           |
 | 2   | Tremolo / Auto-Pan  | LFO as modulation source                | 13.1                 | MFreeFXBundle, Airwindows           | How rate, depth, waveform shape the character |
 | 3   | Biquad (LP/HP/peak) | H(z) to coefficients, per-channel state | 10.23, 11            | AUParametricEQ, AULowpass, AUHipass | Frequency and Q vs. the magnitude curve       |

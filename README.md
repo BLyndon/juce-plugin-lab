@@ -24,9 +24,9 @@ Plugins do not depend on each other.
 
 ## Plugins
 
-| Plugin  | Concept                |
-| ------- | ---------------------- |
-| `empty` | Toolchain, build chain |
+| Plugin     | Concept                                   |
+| ---------- | ----------------------------------------- |
+| `template` | Copy source for new plugins (passthrough) |
 
 The planned sequence is in [plugin-concept-examples.md](docs/context/plugin-concept-examples.md).
 
@@ -63,8 +63,7 @@ pluginval runs as a CTest test (`<name>_pluginval`) and is downloaded into the b
 
 ## Adding a plugin
 
-1. Create `plugins/<name>/` with `spec.md`, `src/`, `test/`, and a `CMakeLists.txt` modeled on an existing plugin (own `PLUGIN_CODE`, `BUNDLE_ID`, `PRODUCT_NAME`).
-2. Add `add_subdirectory(plugins/<name>)` to the root `CMakeLists.txt`.
+Copy `plugins/template/`, change its metadata, and add one `add_subdirectory` line. Steps in [plugins/README.md](plugins/README.md).
 
 ## Docs
 

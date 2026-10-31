@@ -12,7 +12,7 @@
 
 **Session 0a: repo and CI** (about 2 h, no DSP): the Pamplejuce template is adapted into the monorepo (first step: check that its CMake setup can host several plugins), extras and signing are removed, CI is green, prerequisites and local commands are settled. Open decisions marked 0a in `toolstack-reference.md` §5 are settled here.
 
-**Session 0b: empty plugin** (about 2 h, no DSP): an empty plugin goes through the whole chain once. AudioPluginHost and the test audio are set up. The human then sketches the chain in their own words. Open decisions marked 0b in `toolstack-reference.md` §5 are settled here.
+**Session 0b: empty plugin** (now `plugins/template`; about 2 h, no DSP): an empty plugin goes through the whole chain once. AudioPluginHost and the test audio are set up. The human then sketches the chain in their own words. Open decisions marked 0b in `toolstack-reference.md` §5 are settled here.
 
 Phase 0 does not apply to Sessions 0a and 0b.
 

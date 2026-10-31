@@ -103,13 +103,13 @@ ctest --test-dir Builds --output-on-failure
 4. CI as in the template (three platforms), hosted on GitHub. A platform job that causes problems is dropped immediately.
 5. Generator, build directory, and prerequisites follow the template (C++23, CMake minimum).
 6. Session 0 is split: 0a (repo and CI), 0b (empty plugin through the chain).
-7. Monorepo layout `plugins/<name>/` with one CMake root is in place (first plugin: `plugins/empty`); extras and signing steps listed in §1 are removed; CI is green. A second plugin has not been added yet.
+7. Monorepo layout `plugins/<name>/` with one CMake root is in place (first plugin: `plugins/empty`, since renamed to `plugins/template`, the copy source for new plugins); extras and signing steps listed in §1 are removed; CI is green. A second plugin has not been added yet.
 8. Command Line Tools alone are sufficient on this machine: a clean configure, build (C++23, no warnings), Catch2 tests, and pluginval pass without Xcode. CMake and Ninja are installed via Homebrew.
 9. Exact local commands: see §3.
 10. Repository is public, so CI runs free of charge.
 11. JUCE is used under AGPLv3 (learning project, not sold; source is public). A closed-source or commercial release would need the commercial JUCE licence; check its terms then.
 12. The template's `CLAUDE.md` / `AGENTS.md` are removed. Its relevant rules are covered by this project's `CLAUDE.md`.
-13. Local signature: locally built bundles are ad-hoc signed by the build and load in AudioPluginHost without any signing setup (checked with `Empty.vst3`: scanned, loaded, editor opens).
+13. Local signature: locally built bundles are ad-hoc signed by the build and load in AudioPluginHost without any signing setup (checked with `Empty.vst3`, now `Template.vst3`: scanned, loaded, editor opens).
 
 **Open, Session 0a**
 

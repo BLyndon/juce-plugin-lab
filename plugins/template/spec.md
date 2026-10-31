@@ -1,8 +1,8 @@
-# Empty
+# Template
 
 ## Purpose
 
-Passes audio through unchanged; it exists only to take one plugin through the whole chain (build, tests, pluginval, CI, host) without any DSP.
+Passes audio through unchanged. It is the copy source for new plugins (see `plugins/README.md`) and is built, tested, and validated like every other plugin, so the template always works.
 
 ## Reference
 

@@ -30,17 +30,19 @@ ffmpeg -f lavfi -i "aevalsrc=if(lt(mod(n\,48000)\,1)\,0.5\,0):s=48000:d=10" $F c
 
 (zsh syntax: `F` is an array. `pan` copies mono to both channels without the −3 dB that `-ac 2` applies.)
 
-## Getting the files into AudioPluginHost
+## Running a listening test
 
 AudioPluginHost cannot play files; it only takes audio from a sound-card input. A loopback device (BlackHole 2ch, `brew install --cask blackhole-2ch`) acts as a virtual sound card: what is played into it comes out of its input.
 
-1. AudioPluginHost, **Options → Change the Audio Device Settings**: Input = **BlackHole 2ch**, Output = headphones directly (not a device routed through a system EQ such as eqMac).
-2. Graph: **Audio Input → plugin → Audio Output**.
-3. Play a file in a loop into BlackHole. Find its index with the first command, then play:
+1. **Options → Change the Audio Device Settings**: Input = **BlackHole 2ch** (channels 1+2 active), Output = headphones directly (not routed through a system EQ or other audio tool), 48 kHz.
+2. Graph: **Audio Input → plugin → Audio Output**, with no direct **Audio Input → Audio Output** connection (it would mask every change).
+3. Turn the headphone volume down. Play a file in a loop into BlackHole; `<N>` is the index listed as **BlackHole 2ch** (first command). Stop with Ctrl+C.
 
 ```bash
 ffmpeg -f lavfi -i "anullsrc=d=0.1" -f audiotoolbox -list_devices true - 2>&1 | grep '\['
 ffmpeg -re -stream_loop -1 -i ~/Music/plugin-lab-test-audio/pink-noise.wav -f audiotoolbox -audio_device_index <N> -
 ```
 
-Stop with Ctrl+C. The system output stays unchanged. Set the host's sample rate to 48 kHz to avoid resampling.
+4. Check the routing: quitting the host or removing **plugin → Audio Output** must give silence. If not, ffmpeg plays to the wrong device or a second path bypasses the plugin.
+5. Sanity check with a known gain plugin on `sine-1k-18dBFS.wav`: −20 dB clearly quieter, +6 dB clearly louder (clips from about +15 dB; expected).
+6. Listen: file per "Listen for" column, one parameter at a time, A/B with **Toggle Bypass**; exact values via right-click → **Show all parameters**.
