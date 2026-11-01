@@ -20,27 +20,27 @@ Builds on: nothing
 
 ## Symbols
 
-| Symbol                         | Meaning                                                    | Unit                 |
-| ------------------------------ | ---------------------------------------------------------- | -------------------- |
-| $a$, $a_\text{ref}$            | Amplitude and reference amplitude                          | sample value         |
-| $P$, $P_\text{ref}$            | Power and reference power                                  | sample value²        |
-| $L$                            | Level of a ratio                                           | dB                   |
-| $p$                            | Normalised parameter value as the host stores it, $0 … 1$  | none                 |
-| $v$, $v_\text{min}$, $v_\text{max}$ | Parameter value in its unit, and its range           | unit of the parameter |
-| $L_\text{min}$, $L_\text{max}$ | Range of the gain parameter                                | dB                   |
-| $c_\text{target}$, $c[n]$      | Coefficient the DSP needs, target and smoothed value       | depends on the DSP   |
-| $g_\text{target}$, $g[n]$      | Gain factor, target and smoothed value                     | none (linear factor) |
-| $g_0$                          | Gain factor just before a ramp starts, $g_0 = g[n_0 - 1]$  | none (linear factor) |
-| $x[n]$, $y[n]$                 | Input and output sample                                    | sample value         |
-| $n$                            | Sample index of the signal (time)                          | none                 |
-| $n_0$                          | Sample index at which a ramp starts                        | none                 |
-| $k$                            | Step within a ramp, $k = n - n_0$                          | none                 |
-| $f_s$                          | Sample rate                                                | Hz                   |
-| $f$, $f_x$                     | Frequency, and frequency of a sine input                   | Hz                   |
-| $T$                            | Ramp time                                                  | s                    |
-| $N$                            | Ramp length                                                | samples              |
-| $B$                            | Block size, samples per channel in one processing call    | samples              |
-| $H(z)$                         | Transfer function, $z$ the complex frequency variable      | none                 |
+| Symbol                              | Meaning                                                   | Unit                  |
+| ----------------------------------- | --------------------------------------------------------- | --------------------- |
+| $a$, $a_\text{ref}$                 | Amplitude and reference amplitude                         | sample value          |
+| $P$, $P_\text{ref}$                 | Power and reference power                                 | sample value²         |
+| $L$                                 | Level of a ratio                                          | dB                    |
+| $p$                                 | Normalised parameter value as the host stores it, $0 … 1$ | none                  |
+| $v$, $v_\text{min}$, $v_\text{max}$ | Parameter value in its unit, and its range                | unit of the parameter |
+| $L_\text{min}$, $L_\text{max}$      | Range of the gain parameter                               | dB                    |
+| $c_\text{target}$, $c[n]$           | Coefficient the DSP needs, target and smoothed value      | depends on the DSP    |
+| $g_\text{target}$, $g[n]$           | Gain factor, target and smoothed value                    | none (linear factor)  |
+| $g_0$                               | Gain factor just before a ramp starts, $g_0 = g[n_0 - 1]$ | none (linear factor)  |
+| $x[n]$, $y[n]$                      | Input and output sample                                   | sample value          |
+| $n$                                 | Sample index of the signal (time)                         | none                  |
+| $n_0$                               | Sample index at which a ramp starts                       | none                  |
+| $k$                                 | Step within a ramp, $k = n - n_0$                         | none                  |
+| $f_s$                               | Sample rate                                               | Hz                    |
+| $f$, $f_x$                          | Frequency, and frequency of a sine input                  | Hz                    |
+| $T$                                 | Ramp time                                                 | s                     |
+| $N$                                 | Ramp length                                               | samples               |
+| $B$                                 | Block size, samples per channel in one processing call    | samples               |
+| $H(z)$                              | Transfer function, $z$ the complex frequency variable     | none                  |
 
 The chain from the knob to the signal:
 
