@@ -68,3 +68,5 @@ Learning project: basic audio effect plugins. VST3 only, C++ with JUCE, macOS (d
 - `docs/context/toolstack-reference.md`: toolchain, build chain, failure map
 - `docs/context/workflow-reference.md`: session routine, spec template, review checklist
 - `docs/context/pirkle-theory-reference.md`: DSP theory map (the book uses its own framework; DSP concepts transfer, framework parts do not)
+- `docs/CLAUDE.md`: document types, their place in `docs/`, and the requirements they meet. Read it before writing or moving a document in `docs/`; companion documents also follow `docs/theory/CLAUDE.md`.
+- `docs/zettelkasten/CLAUDE.md`: rules for capturing and maintaining the human's ideas in `docs/zettelkasten/`. Read it before working on an idea or a zettel.

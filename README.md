@@ -14,7 +14,7 @@ plugins/<name>/
 ├── src/             processor and editor
 └── test/            Catch2 tests (impulse, sweep) and pluginval
 common/              shared code, extracted once a second plugin needs it
-docs/                guides and references
+docs/                theory, guides, toolchain docs (index: docs/README.md)
 JUCE/                JUCE submodule (develop)
 cmake/               Pamplejuce CMake includes (submodule)
 CMakeLists.txt       one root, one add_subdirectory line per plugin
@@ -67,15 +67,7 @@ Copy `plugins/template/`, change its metadata, and add one `add_subdirectory` li
 
 ## Docs
 
-| Document                                                              | Content                                                                |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| [plugin-filesystem.md](docs/plugin-filesystem.md)                     | Where plugins live on macOS and Linux, bundle layout, inspect commands |
-| [audiopluginhost.md](docs/audiopluginhost.md)                         | Build, start, and load plugins into JUCE's AudioPluginHost             |
-| [decibels-and-gain.md](docs/decibels-and-gain.md)                     | Decibel scale, parameter scaling, smoothing (gain as example)          |
-| [toolstack-reference.md](docs/context/toolstack-reference.md)         | Toolchain decisions, build chain, standard commands, failure map       |
-| [workflow-reference.md](docs/context/workflow-reference.md)           | Session routine, spec template, review checklist                       |
-| [plugin-concept-examples.md](docs/context/plugin-concept-examples.md) | Plugin sequence, concepts, reference plugins                           |
-| [pirkle-theory-reference.md](docs/context/pirkle-theory-reference.md) | DSP theory map for Pirkle, "Designing Audio Effect Plugins in C++"     |
+Companion documents with theory, guides, and toolchain documents. Index and structure: [docs/README.md](docs/README.md).
 
 `CLAUDE.md` holds the rules for the coding agent (scope, realtime rules, verification).
 
