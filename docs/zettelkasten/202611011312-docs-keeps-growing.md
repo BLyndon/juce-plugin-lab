@@ -8,3 +8,4 @@ Every plugin adds documents to `docs/`: theory companions, guides, references. W
 
 - [Document purpose determines its place in docs/](202611011313-purpose-determines-place.md): first consequence, where a document lives
 - [Document purpose determines its layout](202611011314-purpose-determines-layout.md): second consequence, what a document looks like
+- [Publishing docs/ as GitHub Pages is a later stage of the docs/ structure](202611011448-docs-as-github-pages.md): the same growth, one stage further
