@@ -6,7 +6,7 @@ Moves the image[^image] of a stereo signal between the left and right speaker: e
 
 [^image]: The stereo image is the left-to-right placement of sound sources that a listener perceives between two speakers, created only by level and timing differences between the channels.
 
-Theory and design choices: [stereo-panning.md](../../docs/stereo-panning.md).
+Theory and design choices: [stereo-panning.md](../../docs/theory/stereo-panning.md).
 
 ## Reference
 

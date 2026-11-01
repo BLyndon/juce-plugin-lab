@@ -9,6 +9,7 @@ Documents in _Not yet migrated_ still lie flat in `docs/` and move to their plac
 Companion documents, in plugin order. Each explains one transferable DSP concept with a plugin as the example.
 
 1. [decibels-and-parameter-smoothing.md](theory/decibels-and-parameter-smoothing.md): decibel scale, parameter scaling, smoothing, constant factor (plugin `gain`)
+2. [stereo-panning.md](theory/stereo-panning.md): pan laws, mono pan, balance, true stereo pan, width and position, ramping the gains (plugin `stereo-pan`)
 
 ## Guides
 
@@ -22,7 +23,6 @@ _None yet._
 
 | Document                                     | Content                                                                | Target       |
 | -------------------------------------------- | ---------------------------------------------------------------------- | ------------ |
-| [stereo-panning.md](stereo-panning.md)       | Pan laws, mono/balance/true stereo pan, width and position             | `theory/`    |
 | [audiopluginhost.md](audiopluginhost.md)     | Build, start, and load plugins into JUCE's AudioPluginHost             | `guides/`    |
 | [test-audio.md](test-audio.md)               | Test audio files and how to run a listening test in the host           | `guides/`    |
 | [build-chain.md](build-chain.md)             | The path from source to sound: configure, build, test, CI, host        | `toolchain/` |

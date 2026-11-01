@@ -38,7 +38,6 @@ The documents that still lie flat in `docs/` predate this structure. The human r
 
 | Document               | Target       |
 | ---------------------- | ------------ |
-| `stereo-panning.md`    | `theory/`    |
 | `audiopluginhost.md`   | `guides/`    |
 | `test-audio.md`        | `guides/`    |
 | `build-chain.md`       | `toolchain/` |
