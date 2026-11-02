@@ -10,6 +10,7 @@ Companion documents, in plugin order. Each explains one transferable DSP concept
 
 1. [decibels-and-parameter-smoothing.md](theory/decibels-and-parameter-smoothing.md): decibel scale, parameter scaling, smoothing, constant factor (plugin `gain`)
 2. [stereo-panning.md](theory/stereo-panning.md): pan laws, mono pan, balance, true stereo pan, width and position, ramping the gains (plugin `stereo-pan`)
+3. [lfo-and-amplitude-modulation.md](theory/lfo-and-amplitude-modulation.md): LFO phase accumulator, modulation range, polarity and depth, amplitude modulation sidebands, smoothing depth (plugin `tremolo`)
 
 ## Guides
 
