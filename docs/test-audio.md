@@ -4,17 +4,18 @@ A fixed set of files, so reference plugins and own builds are always compared on
 
 ## Files
 
-All 48 kHz, 24-bit, stereo (both channels identical), 10 s.
+All 48 kHz, 24-bit, stereo, 10 s. Both channels are identical, except in `stereo-sine-500L-1200R-18dBFS.wav`.
 
-| File                   | Content                | Level           | Listen for                 |
-| ---------------------- | ---------------------- | --------------- | -------------------------- |
-| `sine-1k-18dBFS.wav`   | 1 kHz sine             | RMS −18 dBFS    | Gain, distortion, panning  |
-| `pink-noise.wav`       | Pink noise             | Peak −13.5 dBFS | Filter shape, modulation   |
-| `white-noise.wav`      | White noise            | Peak −18 dBFS   | Filter shape, top end      |
-| `sweep-20-20k-10s.wav` | Log sweep 20 Hz–20 kHz | Peak −12 dBFS   | Resonances, aliasing       |
-| `clicks-1s.wav`        | One click per second   | Peak −6 dBFS    | Delay repeats, decay tail  |
-| _drum loop_            | To be added (download) |                 | Transients, timing         |
-| _guitar DI_            | To be added (download) |                 | Realistic program material |
+| File                                | Content                              | Level                    | Listen for                                  |
+| ----------------------------------- | ------------------------------------ | ------------------------ | ------------------------------------------- |
+| `sine-1k-18dBFS.wav`                | 1 kHz sine                           | RMS −18 dBFS             | Gain, distortion, panning                   |
+| `stereo-sine-500L-1200R-18dBFS.wav` | 500 Hz sine left, 1200 Hz sine right | RMS −18 dBFS per channel | Stereo pan: where each input ends up, width |
+| `pink-noise.wav`                    | Pink noise                           | Peak −13.5 dBFS          | Filter shape, modulation                    |
+| `white-noise.wav`                   | White noise                          | Peak −18 dBFS            | Filter shape, top end                       |
+| `sweep-20-20k-10s.wav`              | Log sweep 20 Hz–20 kHz               | Peak −12 dBFS            | Resonances, aliasing                        |
+| `clicks-1s.wav`                     | One click per second                 | Peak −6 dBFS             | Delay repeats, decay tail                   |
+| _drum loop_                         | To be added (download)               |                          | Transients, timing                          |
+| _guitar DI_                         | To be added (download)               |                          | Realistic program material                  |
 
 The synthetic files are generated with ffmpeg:
 
@@ -26,9 +27,10 @@ ffmpeg -f lavfi -i "anoisesrc=color=pink:amplitude=0.25:duration=10:sample_rate=
 ffmpeg -f lavfi -i "anoisesrc=color=white:amplitude=0.125:duration=10:sample_rate=48000" $F white-noise.wav
 ffmpeg -f lavfi -i "aevalsrc=0.25*sin(2*PI*20*10/log(1000)*(exp(t/10*log(1000))-1)):s=48000:d=10" $F sweep-20-20k-10s.wav
 ffmpeg -f lavfi -i "aevalsrc=if(lt(mod(n\,48000)\,1)\,0.5\,0):s=48000:d=10" $F clicks-1s.wav
+ffmpeg -f lavfi -i "sine=frequency=500:sample_rate=48000:duration=10,volume=3dB" -f lavfi -i "sine=frequency=1200:sample_rate=48000:duration=10,volume=3dB" -filter_complex "[0:a][1:a]join=inputs=2:channel_layout=stereo" -ar 48000 -c:a pcm_s24le -y stereo-sine-500L-1200R-18dBFS.wav
 ```
 
-(zsh syntax: `F` is an array. `pan` copies mono to both channels without the −3 dB that `-ac 2` applies.)
+(zsh syntax: `F` is an array. `pan` copies mono to both channels without the −3 dB that `-ac 2` applies. The stereo file does not use `F`: `join` puts each sine on its own channel, so a stereo panner has different content on each input to move; with identical channels, width has no audible effect.)
 
 ## Running a listening test
 
