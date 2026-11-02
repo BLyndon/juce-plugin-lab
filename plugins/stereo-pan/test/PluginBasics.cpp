@@ -10,7 +10,7 @@ TEST_CASE ("Plugin instance", "[instance]")
     {
         // Must match PRODUCT_NAME in CMakeLists.txt
         CHECK_THAT (testPlugin.getName().toStdString(),
-            Catch::Matchers::Equals ("Template"));
+            Catch::Matchers::Equals ("Stereo Pan"));
     }
 
     SECTION ("program name")

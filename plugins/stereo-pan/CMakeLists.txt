@@ -11,12 +11,10 @@ juce_add_plugin(${PLUGIN_TARGET}
 
     PLUGIN_MANUFACTURER_CODE ${PLUGIN_MANUFACTURER_CODE}
 
-    # Change per plugin: a unique four-character plugin id, at least one upper-case character
-    PLUGIN_CODE Tmpl
+    PLUGIN_CODE Span
     FORMATS VST3
 
-    # Change per plugin: how it's listed in the host (also checked in test/PluginBasics.cpp)
-    PRODUCT_NAME "Template")
+    PRODUCT_NAME "Stereo Pan")
 
 # This lets us use our code in both the JUCE targets and our Test target
 # Without running into ODR violations
